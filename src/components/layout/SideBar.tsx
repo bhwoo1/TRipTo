@@ -1,5 +1,6 @@
 import React from 'react'
 import Navigator from './Navigator'
+import Logo from './Logo'
 
 function SideBar({children}: {
     children: React.ReactNode
@@ -8,7 +9,7 @@ function SideBar({children}: {
     <div className='flex flex-row h-full'>
         <nav className='hidden flex-col w-[240px] lg:flex'>
             <section className='p-8'>
-                <span>TRipTo</span>
+                <Logo />
             </section>
             <div className='p-8'>
                 <Navigator />
