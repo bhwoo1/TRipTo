@@ -10,11 +10,8 @@ function Header({children}: {
             <div>
              Header
             </div>
-            <div className='lg:w-[480px] w-[240px]'>
+            <div className='lg:w-[480px] w-[240px] p-4 mt-2'>
                 <SearchBar />
-            </div>
-            <div>
-                Header
             </div>
         </section>
         <div className='h-[calc(100% - 80px)]'>
