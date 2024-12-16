@@ -1,5 +1,5 @@
 import React from 'react'
-import SearchBar from '../searchBar'
+import SearchBar from '../SearchBar'
 
 function Header({children}: {
     children: React.ReactNode
