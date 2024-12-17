@@ -19,7 +19,7 @@ function Navigator({isFooter}: {isFooter: boolean}) {
       {
         icon: <FaCompass size={24} />,
         label: "둘러보기",
-        isActive: pathname === "/explore",
+        isActive: pathname.startsWith("/explore"),
         href: "/explore"
       }
     ];
