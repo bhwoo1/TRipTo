@@ -70,9 +70,9 @@ function YourLocation() {
   };
 
   return (
-    <div className="flex flex-col">
-        <span className="text-gray-600 font-bold">당신의 위치는?</span>
-        <span className="text-[36px] font-bold text-gray-700">{locationArea}!</span>
+    <div className="flex flex-col mt-24">
+        <span className="font-bold text-[18px] lg:text-[24px]">당신의 위치는?</span>
+        <span className="text-[36px] lg:text-[48px] font-bold">{locationArea}!</span>
     </div>
   );
 }

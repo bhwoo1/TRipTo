@@ -16,8 +16,18 @@ export const userLocationStore = create<userLocationStore>((set) => ({
         lat: 37.564214,
         lng: 127.0016985
     },
-    locationArea: "서울",
+    locationArea: "검색 중",
     setLocation: (state) => set({ locationState: state}),
     setArea: (state) => set({locationArea: state})
 
 }));
+
+interface randomTagStore {
+    tag: string,
+    setTag: (state: string) => void;
+}
+
+export const randomTagStore = create<randomTagStore>((set) => ({
+    tag: "",
+    setTag: (state) => set({tag: state})
+}))
