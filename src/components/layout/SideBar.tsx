@@ -8,11 +8,11 @@ function SideBar({children}: {
   return (
     <div className='flex flex-row h-full'>
         <nav className='hidden flex-col w-[240px] lg:flex'>
-            <section className='p-8'>
+            <section className='py-2 px-8'>
                 <Logo />
             </section>
             <div className='p-8'>
-                <Navigator />
+                <Navigator isFooter={false} />
             </div>
         </nav>
         <div className='w-full lg:w-[calc(100%-240px)]'>

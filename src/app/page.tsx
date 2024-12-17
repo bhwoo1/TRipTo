@@ -1,9 +1,8 @@
-import { sleep } from "@/lib/utils";
+import YourLocation from "@/components/YourLocation";
 
-export default async function Home() {
-  await sleep(2000);
+export default function Home() {
 
   return (
-    <>Home</>
+    <><YourLocation /></>
   );
 }

@@ -1,13 +1,17 @@
 import React from 'react'
 import SearchBar from '../SearchBar'
 import Logo from './Logo'
+import BgImg from './BgImg'
 
 function Header({children}: {
     children: React.ReactNode
 }) {
   return (
-    <div className='flex flex-col'>
-        <section className='h-[100px] flex flex-row justify-between items-center p-4'>
+    <header className='relative'>
+        <section className=' absolute top-0 w-full'>
+            <BgImg />
+        </section>
+        <section className='sticky h-[100px] flex flex-row justify-between items-center p-4'>
             <div className='h-[100px] min-w-[100px]'>
                 <div className='lg:hidden flex'>
                 <Logo />
@@ -17,10 +21,10 @@ function Header({children}: {
                 <SearchBar />
             </div>
         </section>
-        <div className='h-[calc(100% - 80px)]'>
+        <div className='h-[calc(100% - 200px)] absolute'>
             {children}
         </div>
-    </div>
+    </header>
   )
 }
 

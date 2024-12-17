@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@prisma/client": "^6.0.1",
+    "@types/navermaps": "^3.7.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "install": "^0.13.0",
