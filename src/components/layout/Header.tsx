@@ -21,8 +21,10 @@ function Header({children}: {
                 <SearchBar />
             </div>
         </section>
-        <div className='h-[calc(100%-200px)]  absolute'>
+        <div className='relative z-10'>
+        <div className='h-[calc(100%-200px)] '>
             {children}
+        </div>
         </div>
     </header>
   )

@@ -15,6 +15,7 @@ import { useQuery } from "react-query";
 import Loading from "./Loading";
 import Error from "./Error";
 import AttractionCard from "./layout/AttractionCard";
+import { redirect } from "next/navigation";
 
 const fetchAttraction = async ({ locationArea }: { locationArea: string }) => {
   const response = await axios("/api/attraction/location", {
@@ -40,6 +41,10 @@ function LocationCarosuel() {
   if (isLoading) return <Loading />;
   if (isError) return <Error />;
 
+  const cardClick = (id: number) => {
+    redirect(`/explore/attraction?id=${id}`);
+  }
+
   return (
 
     <div className="lg:w-screen">
@@ -64,7 +69,7 @@ function LocationCarosuel() {
               key={attraction.id}
               className="basis-1/2 xl:basis-1/5 lg:basis-1/3"
             >
-              <div className="sm:w-1/2 lg:w-[280px] md:w-[300px]">
+              <div className="sm:w-1/2 lg:w-[280px] md:w-[300px]" onClick={() => cardClick(attraction.id)}>
                 <AttractionCard attraction={attraction} />
               </div>
             </CarouselItem>
