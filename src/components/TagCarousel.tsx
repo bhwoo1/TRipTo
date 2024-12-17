@@ -65,14 +65,14 @@ function TagCarousel() {
           </div>
           <CarouselContent >
                 {locationAttraction?.map((attraction) => (
-                <CarouselItem key={attraction.id} className="basis-1/2 lg:basis-1/5">
-                    <div className="sm:w-1/2 lg:w-[360px] md:w-[300px]">
+                <CarouselItem key={attraction.id} className="basis-1/2 xl:basis-1/5 lg:basis-1/3">
+                    <div className="sm:w-1/2 lg:w-[280px] md:w-[300px]">
                             <AttractionCard attraction={attraction} />
                           </div>
                 </CarouselItem>
                 ))}
                 <CarouselItem >
-                <div className="sm:w-1/2 lg:w-[360px] md:w-[300px]">
+                <div className="sm:w-1/2 lg:w-[280px] md:w-[300px]">
                     <AttractionCardPlus />
                     </div>
                 </CarouselItem>

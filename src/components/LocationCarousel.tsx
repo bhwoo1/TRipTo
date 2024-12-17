@@ -41,6 +41,7 @@ function LocationCarosuel() {
   if (isError) return <Error />;
 
   return (
+
     <div className="lg:w-screen">
       <Carousel className="">
         <div className="flex flex-row justify-between items-center my-2">
@@ -61,9 +62,9 @@ function LocationCarosuel() {
           {locationAttraction?.map((attraction) => (
             <CarouselItem
               key={attraction.id}
-              className="basis-1/2 lg:basis-1/5"
+              className="basis-1/2 xl:basis-1/5 lg:basis-1/3"
             >
-              <div className="sm:w-1/2 lg:w-[360px] md:w-[300px]">
+              <div className="sm:w-1/2 lg:w-[280px] md:w-[300px]">
                 <AttractionCard attraction={attraction} />
               </div>
             </CarouselItem>

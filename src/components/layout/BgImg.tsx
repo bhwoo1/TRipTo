@@ -88,7 +88,7 @@ function BgImg() {
           alt="background-images"
           onContextMenu={(e) => e.preventDefault()}
           onDragStart={(e) => e.preventDefault()}
-          quality={25}
+          quality={35}
         />
       </div>
       <div className="absolute top-0 bg-white opacity-40 w-full h-full"></div>
