@@ -10,12 +10,25 @@ export async function GET(req: Request) {
             return NextResponse.json({ error: "Tag is required" }, { status: 400 });
         }
 
+        // 전체 관광지의 수를 먼저 구함
+        const totalCount = await prisma.touristSpot.count({
+            where: {
+                tags: {
+                    array_contains: [tag]
+                }
+            }
+        });
+
+        // 랜덤 시작 위치 x를 계산
+        const randomOffset = Math.floor(Math.random() * (totalCount - 10));
+
         const searchedAttraction = await prisma.touristSpot.findMany({
             where: {
                 tags: {
                     array_contains: [tag]
                 }
             },
+            skip: randomOffset,
             take: 5
         });
 

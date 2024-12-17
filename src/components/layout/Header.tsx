@@ -21,7 +21,7 @@ function Header({children}: {
                 <SearchBar />
             </div>
         </section>
-        <div className='h-[calc(100% - 200px)] absolute'>
+        <div className='h-[calc(100%-200px)]  absolute'>
             {children}
         </div>
     </header>

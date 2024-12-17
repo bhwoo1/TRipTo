@@ -24,10 +24,18 @@ export const userLocationStore = create<userLocationStore>((set) => ({
 
 interface randomTagStore {
     tag: string,
-    setTag: (state: string) => void;
+    img: string,
+    des: string,
+    setTag: (state: string) => void,
+    setImg: (state: string) => void,
+    setDes: (state: string) => void
 }
 
 export const randomTagStore = create<randomTagStore>((set) => ({
     tag: "",
-    setTag: (state) => set({tag: state})
+    img: "",
+    des: "",
+    setTag: (state) => set({tag: state }),
+    setImg: (state) => set({img: state}),
+    setDes: (state) => set({des: state})
 }))

@@ -1,12 +1,13 @@
 "use client";
 
-import { userLocationStore } from "@/zustand/store";
+import { randomTagStore, userLocationStore } from "@/zustand/store";
 import React, { useEffect } from "react";
 
 function YourLocation() {
   const { locationState, setLocation, setArea, locationArea } =
     userLocationStore();
   const naverMapApiKey = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID;
+  const {des} = randomTagStore();
 
   useEffect(() => {
     // 네이버 지도 API 스크립트 로드
@@ -73,6 +74,7 @@ function YourLocation() {
     <div className="flex flex-col mt-24">
         <span className="font-bold text-[18px] lg:text-[24px]">당신의 위치는?</span>
         <span className="text-[36px] lg:text-[48px] font-bold">{locationArea}!</span>
+        <span className="font-bold text-[18px] lg:text-[24px] mt-8">{des}</span>
     </div>
   );
 }

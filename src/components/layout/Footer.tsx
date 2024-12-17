@@ -9,7 +9,7 @@ function Footer({children}: {
         <div className='h-[calc(100%-200px)]'>
             {children}
         </div>
-        <section className='lg:hidden h-[100px] flex flex-row justify-between items-center p-4 fixed bottom-0 left-0 right-0'>
+        <section className='sticky lg:hidden h-[100px] w-full flex flex-row justify-between items-center p-4 bottom-0 left-0 right-0 bg-white'>
             <Navigator isFooter={true} />
         </section>
     </div>

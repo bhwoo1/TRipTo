@@ -14,6 +14,8 @@ import { attraction } from "@/Type";
 import { useQuery } from "react-query";
 import Loading from "./Loading";
 import Error from "./Error";
+import AttractionCard from "./layout/AttractionCard";
+import AttractionCardPlus from "./layout/AttractionCardPlus";
 
 
 const fetchAttraction = async ({tag}: {tag: string}) => {
@@ -50,23 +52,30 @@ function TagCarousel() {
   return (
       <div className="lg:w-screen">
         <Carousel className="">
-          <div className="flex flex-row justify-between items-end my-2">
+          <div className="flex flex-row justify-between items-center my-2">
             <article>
-              <div className="font-bold text-[28px]">태그: {tag}</div>
+              <div className="font-bold text-[28px]">테마: {tag}</div>
             </article>
-            <div className="relative left-[-45px]">
+            <div className="relative left-[-100px]">
               <div className="absolute lg:hidden">
                 <CarouselPrevious />
                 <CarouselNext />
               </div>
             </div>
           </div>
-          <CarouselContent>
+          <CarouselContent >
                 {locationAttraction?.map((attraction) => (
                 <CarouselItem key={attraction.id} className="basis-1/2 lg:basis-1/5">
-                    <div className="p-1">{attraction.name}</div>
+                    <div className="sm:w-1/2 lg:w-[360px] md:w-[300px]">
+                            <AttractionCard attraction={attraction} />
+                          </div>
                 </CarouselItem>
                 ))}
+                <CarouselItem >
+                <div className="sm:w-1/2 lg:w-[360px] md:w-[300px]">
+                    <AttractionCardPlus />
+                    </div>
+                </CarouselItem>
           </CarouselContent>
         </Carousel>
       </div>

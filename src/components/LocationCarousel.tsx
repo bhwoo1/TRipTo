@@ -9,60 +9,68 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import axios from 'axios';
+import axios from "axios";
 import { attraction } from "@/Type";
 import { useQuery } from "react-query";
 import Loading from "./Loading";
 import Error from "./Error";
+import AttractionCard from "./layout/AttractionCard";
 
-
-const fetchAttraction = async ({locationArea}: {locationArea: string}) => {
-    const response = await axios('/api/attraction/location', {
-        params: {
-            area: locationArea
-        }
-    });
-    return response.data;
-}
+const fetchAttraction = async ({ locationArea }: { locationArea: string }) => {
+  const response = await axios("/api/attraction/location", {
+    params: {
+      area: locationArea,
+    },
+  });
+  return response.data;
+};
 
 function LocationCarosuel() {
   const { locationArea } = userLocationStore();
   const area = locationArea.split(" ").slice(0, 1);
 
-  const { data: locationAttraction, isLoading, isError } = useQuery<attraction[]>(
-    ['locationAttraction', locationArea],
-    () => fetchAttraction({locationArea}) 
+  const {
+    data: locationAttraction,
+    isLoading,
+    isError,
+  } = useQuery<attraction[]>(["locationAttraction", locationArea], () =>
+    fetchAttraction({ locationArea })
   );
 
-  if (isLoading) return <Loading />
-  if (isError) return <Error />
-
-  
+  if (isLoading) return <Loading />;
+  if (isError) return <Error />;
 
   return (
-      <div className="lg:w-screen">
-        <Carousel className="">
-          <div className="flex flex-row justify-between items-end my-2">
-            <article>
-              <div className="font-bold text-[28px]">{area}</div>
-              <div className="font-bold text-[16px] text-neutral-600">멋진 장소들</div>
-            </article>
-            <div className="relative left-[-45px]">
-              <div className="absolute lg:hidden">
-                <CarouselPrevious />
-                <CarouselNext />
-              </div>
+    <div className="lg:w-screen">
+      <Carousel className="">
+        <div className="flex flex-row justify-between items-center my-2">
+          <article>
+            <div className="font-bold text-[28px]">{area}</div>
+            <div className="font-bold text-[16px] text-neutral-600">
+              멋진 장소들
+            </div>
+          </article>
+          <div className="relative left-[-100px]">
+            <div className="absolute lg:hidden">
+              <CarouselPrevious />
+              <CarouselNext />
             </div>
           </div>
-          <CarouselContent>
-                {locationAttraction?.map((attraction) => (
-                <CarouselItem key={attraction.id} className="basis-1/2 lg:basis-1/5">
-                    <div className="p-1">{attraction.name}</div>
-                </CarouselItem>
-                ))}
-          </CarouselContent>
-        </Carousel>
-      </div>
+        </div>
+        <CarouselContent>
+          {locationAttraction?.map((attraction) => (
+            <CarouselItem
+              key={attraction.id}
+              className="basis-1/2 lg:basis-1/5"
+            >
+              <div className="sm:w-1/2 lg:w-[360px] md:w-[300px]">
+                <AttractionCard attraction={attraction} />
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
+    </div>
   );
 }
 
