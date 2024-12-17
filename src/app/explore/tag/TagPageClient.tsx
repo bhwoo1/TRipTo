@@ -5,7 +5,7 @@ import React from "react";
 
 function TagPageClient() {
   const searchParams = useSearchParams();
-  const tag = searchParams.get("tag"); // id 값 가져오기
+  const tag = searchParams.get("tag"); // 태그 가져오기기
 
   if (!tag) redirect("/");
   return <div>{tag}</div>;
