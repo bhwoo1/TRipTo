@@ -36,7 +36,7 @@ function TagCardCarousel() {
               key={img.tag}
               className="basis-1/2 md:basis-1/3"
             >
-              <div className=" lg:w-[280px] md:w-[300px]" onClick={() => cardClick(img.tag)}>
+              <div className="sm:w-1/2 lg:w-[280px] md:w-[300px]" onClick={() => cardClick(img.tag)}>
                 <TagCard img={img.img} tag={img.tag} />
               </div>
             </CarouselItem>

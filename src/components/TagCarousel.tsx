@@ -49,7 +49,7 @@ function TagCarousel() {
   if (isError) return <Error />
 
   const cardClick = (id: number) => {
-    redirect(`/explore/attraction?id=${id}`);
+    redirect(`/explore/place?id=${id}`);
   }
 
   const tagClick = () => {
@@ -60,7 +60,7 @@ function TagCarousel() {
 
   return (
 
-    <div className="lg:w-screen">
+    <div className="lg:w-full">
       <Carousel className="">
         <div className="flex flex-row justify-between items-center my-2">
           <article>

@@ -1,6 +1,6 @@
 "use client";
 
-import { userLocationStore } from "@/zustand/store";
+import { selectedAreaStore, userLocationStore } from "@/zustand/store";
 import React from "react";
 import {
   Carousel,
@@ -15,47 +15,63 @@ import { useQuery } from "react-query";
 import Loading from "./Loading";
 import Error from "./Error";
 import AttractionCard from "./layout/AttractionCard";
-import { redirect } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
+import LocationSelect from "@/app/explore/LocationSelect";
 
-const fetchAttraction = async ({ locationArea }: { locationArea: string }) => {
+const fetchAttraction = async ({ areaToUse }: { areaToUse: string }) => {
   const response = await axios("/api/attraction/location", {
     params: {
-      area: locationArea,
+      area: areaToUse,
     },
   });
   return response.data;
 };
 
 function LocationCarosuel() {
+  const pathname = usePathname();
   const { locationArea } = userLocationStore();
+  const { selectedArea } = selectedAreaStore();
   const area = locationArea.split(" ").slice(0, 1);
+
+  const areaToUse = pathname === "/" ? locationArea : selectedArea;
 
   const {
     data: locationAttraction,
     isLoading,
     isError,
-  } = useQuery<attraction[]>(["locationAttraction", locationArea], () =>
-    fetchAttraction({ locationArea })
+  } = useQuery<attraction[]>(["locationAttraction", areaToUse], () =>
+    fetchAttraction({ areaToUse }), {
+      keepPreviousData: true
+    }
   );
 
   if (isLoading) return <Loading />;
   if (isError) return <Error />;
 
   const cardClick = (id: number) => {
-    redirect(`/explore/attraction?id=${id}`);
-  }
+    redirect(`/explore/place?id=${id}`);
+  };
 
   return (
-
-    <div className="lg:w-screen">
+    <div className="lg:w-full">
       <Carousel className="">
         <div className="flex flex-row justify-between items-center my-2">
-          <article>
-            <div className="font-bold text-[28px]">{area}</div>
-            <div className="font-bold text-[16px] text-neutral-600">
-              멋진 장소들
-            </div>
-          </article>
+          {pathname === "/" ? (
+            <article>
+              <div className="font-bold text-[28px]">{area}</div>
+              <div className="font-bold text-[16px] text-neutral-600">
+                멋진 장소들
+              </div>
+            </article>
+          ) : (
+            <article>
+              <div className="font-bold text-[28px]">지역별로 찾아보기</div>
+              <div className="font-bold text-[16px] text-neutral-600">
+                <LocationSelect />
+              </div>
+            </article>
+          )}
+
           <div className="relative left-[-100px]">
             <div className="absolute lg:hidden">
               <CarouselPrevious />
@@ -69,7 +85,10 @@ function LocationCarosuel() {
               key={attraction.id}
               className="basis-1/2 xl:basis-1/5 lg:basis-1/3"
             >
-              <div className="sm:w-1/2 lg:w-[280px] md:w-[300px]" onClick={() => cardClick(attraction.id)}>
+              <div
+                className="sm:w-1/2 lg:w-[280px] md:w-[300px]"
+                onClick={() => cardClick(attraction.id)}
+              >
                 <AttractionCard attraction={attraction} />
               </div>
             </CarouselItem>
