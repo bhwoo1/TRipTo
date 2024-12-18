@@ -1,10 +1,10 @@
 import React from 'react'
-import AttractionPageClient from './AttractionPageClient'
+import PlacePageClient from './PlacePageClient'
 
 function page() {
   return (
     <div>
-      <AttractionPageClient />
+      <PlacePageClient />
     </div>
   )
 }

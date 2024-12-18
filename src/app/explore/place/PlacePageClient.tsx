@@ -3,7 +3,7 @@
 import { redirect, useSearchParams } from 'next/navigation';
 import React from 'react'
 
-function AttractionPageClient() {
+function PlacePageClient() {
     const searchParams = useSearchParams();
   const id = searchParams.get("id"); // id 값 가져오기
 
@@ -13,4 +13,4 @@ function AttractionPageClient() {
   )
 }
 
-export default AttractionPageClient;
+export default PlacePageClient;
