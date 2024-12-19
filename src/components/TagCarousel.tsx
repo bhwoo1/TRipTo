@@ -19,7 +19,9 @@ import AttractionCardPlus from "./layout/AttractionCardPlus";
 import { redirect } from "next/navigation";
 
 
-const fetchAttraction = async ({tag}: {tag: string}) => {
+
+
+const fetchAttraction = async ({ tag }: {tag: string}) => {
     const response = await axios('/api/attraction/tag', {
         params: {
             tag: tag
@@ -29,19 +31,20 @@ const fetchAttraction = async ({tag}: {tag: string}) => {
 }
 
 function TagCarousel() {
-  const {tag} = randomTagStore();
+  const { tag } = randomTagStore();
+  
 
-  const safeTag = tag ?? '';
+  const safeTag = tag ??  "";
 
   const { data: locationAttraction, isLoading, isError } = useQuery<attraction[]>(
-    ['tagAttraction', tag],
+    ['tagAttraction', safeTag],
     () => fetchAttraction({tag: safeTag}),
     {
       enabled: safeTag !== ''  // tag가 빈 값일 때 쿼리 요청을 하지 않음
     }
   );
 
-  if (tag === "") {
+  if (safeTag === "") {
     return <Loading />
   }
 
@@ -53,7 +56,7 @@ function TagCarousel() {
   }
 
   const tagClick = () => {
-    redirect(`/explore/tag?tag=${tag}`);
+    redirect(`/explore/tag?tag=${safeTag}`);
   }
 
   
@@ -64,10 +67,10 @@ function TagCarousel() {
       <Carousel className="">
         <div className="flex flex-row justify-between items-center my-2">
           <article>
-          <div className="font-bold text-[28px]">테마: {tag}</div>
+          <div className="font-bold text-[28px]">테마: {safeTag}</div>
           </article>
           <div className="relative left-[-100px]">
-            <div className="absolute lg:hidden">
+            <div className="absolute">
               <CarouselPrevious />
               <CarouselNext />
             </div>
@@ -92,37 +95,6 @@ function TagCarousel() {
         </CarouselContent>
       </Carousel>
     </div>
-
-    
-      // <div className="lg:w-screen">
-      //   <Carousel className="">
-      //     <div className="flex flex-row justify-between items-center my-2">
-      //       <article>
-      //         <div className="font-bold text-[28px]">테마: {tag}</div>
-      //       </article>
-      //       <div className="relative left-[-100px]">
-      //         <div className="absolute lg:hidden">
-      //           <CarouselPrevious />
-      //           <CarouselNext />
-      //         </div>
-      //       </div>
-      //     </div>
-      //     <CarouselContent >
-      //           {locationAttraction?.map((attraction) => (
-      //           <CarouselItem key={attraction.id} className="basis-1/2 xl:basis-1/5 lg:basis-1/3">
-      //               <div className="sm:w-1/2 lg:w-[280px] md:w-[300px]">
-      //                       <AttractionCard attraction={attraction} />
-      //                     </div>
-      //           </CarouselItem>
-      //           ))}
-      //           <CarouselItem >
-      //           <div className="sm:w-1/2 lg:w-[280px] md:w-[300px]">
-      //               <AttractionCardPlus />
-      //               </div>
-      //           </CarouselItem>
-      //     </CarouselContent>
-      //   </Carousel>
-      // </div>
   );
 }
 

@@ -1,6 +1,5 @@
 "use client";
 
-import { selectedAreaStore, userLocationStore } from "@/zustand/store";
 import React from "react";
 import {
   Carousel,
@@ -12,38 +11,33 @@ import {
 import axios from "axios";
 import { attraction } from "@/Type";
 import { useQuery } from "react-query";
-import Loading from "./Loading";
-import Error from "./Error";
-import AttractionCard from "./layout/AttractionCard";
-import { redirect, usePathname } from "next/navigation";
-import LocationSelect from "@/app/explore/LocationSelect";
+import { redirect } from "next/navigation";
+import Loading from "@/components/Loading";
+import Error from "@/components/Error";
+import AttractionCard from "@/components/layout/AttractionCard";
 
-const fetchAttraction = async ({ areaToUse }: { areaToUse: string }) => {
+const fetchAttraction = async ({ location }: { location: string }) => {
   const response = await axios("/api/attraction/location", {
     params: {
-      area: areaToUse,
+      area: location,
     },
   });
   return response.data;
 };
 
-function LocationCarosuel() {
-  const pathname = usePathname();
-  const { locationArea } = userLocationStore();
-  const { selectedArea } = selectedAreaStore();
-  const area = locationArea.split(" ").slice(0, 1);
-
-  const areaToUse = pathname === "/explore" ? selectedArea : locationArea;
+function FixedLocationCarosuel({location, id}: {location: string, id: number}) {
 
   const {
     data: locationAttraction,
     isLoading,
     isError,
-  } = useQuery<attraction[]>(["locationAttraction", areaToUse], () =>
-    fetchAttraction({ areaToUse }), {
+  } = useQuery<attraction[]>(["locationAttraction", location], () =>
+    fetchAttraction({ location }), {
       keepPreviousData: true
     }
   );
+
+  const newAttraction = locationAttraction?.filter((attraction) => attraction.id !== id);
 
   if (isLoading) return <Loading />;
   if (isError) return <Error />;
@@ -56,21 +50,12 @@ function LocationCarosuel() {
     <div className="lg:w-full">
       <Carousel className="">
         <div className="flex flex-row justify-between items-center my-2">
-          {pathname === "/" ? (
             <article>
-              <div className="font-bold text-[28px]">{area}</div>
+              <div className="font-bold text-[28px]">{location}</div>
               <div className="font-bold text-[16px] text-neutral-600">
-                멋진 장소들
+                다른 장소들
               </div>
             </article>
-          ) : (
-            <article>
-              <div className="font-bold text-[28px]">지역별로 찾아보기</div>
-              <div className="font-bold text-[16px] text-neutral-600">
-                <LocationSelect />
-              </div>
-            </article>
-          )}
 
           <div className="relative left-[-100px]">
             <div className="absolute">
@@ -80,7 +65,7 @@ function LocationCarosuel() {
           </div>
         </div>
         <CarouselContent>
-          {locationAttraction?.map((attraction) => (
+          {newAttraction?.map((attraction) => (
             <CarouselItem
               key={attraction.id}
               className="basis-1/2 xl:basis-1/5 lg:basis-1/3"
@@ -99,4 +84,4 @@ function LocationCarosuel() {
   );
 }
 
-export default LocationCarosuel;
+export default FixedLocationCarosuel;

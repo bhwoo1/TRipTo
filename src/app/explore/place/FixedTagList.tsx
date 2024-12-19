@@ -3,27 +3,29 @@
 import TagCard from "@/app/explore/TagCard";
 import { bgImages } from "@/Type";
 import React from "react";
-import TagCardCarousel from "./TagCardCarousel";
 import { redirect } from "next/navigation";
 
-function TagList() {
+function FixedTagList({tags}: {tags: string[]}) {
   const cardClick = (tag: string) => {
     redirect(`/explore/tag?tag=${tag}`);
   };
 
+  const filteredBgImages = bgImages.filter(image => 
+    tags?.includes(image.tag) ?? false
+  );
   
   return (
     <div className="flex gap-2 lg:w-[1500px]">
-      <div className="lg:flex hidden flex-col">
+      <div className="flex flex-col">
         <article>
           <div className="font-bold text-[28px]">테마별로 찾기</div>
         </article>
-        <div className="grid lg:grid-cols-5 gap-20 mt-4">
+        <div className="grid lg:grid-cols-5 grid-cols-2 gap-12 lg:gap-20 mt-4">
           
-          {bgImages.map((img) => (
+          {filteredBgImages.map((img) => (
             <div
               key={img.tag}
-              className="lg:w-[220px] md:w-[300px]"
+              className="w-[220px] lg:w-[220px] md:w-[300px]"
               onClick={() => cardClick(img.tag)}
             >
               <TagCard img={img.img} tag={img.tag} />
@@ -31,11 +33,8 @@ function TagList() {
           ))}
         </div>
       </div>
-      <div className="flex lg:hidden">
-        <TagCardCarousel />
-      </div>
     </div>
   );
 }
 
-export default TagList;
+export default FixedTagList;
