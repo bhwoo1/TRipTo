@@ -20,7 +20,7 @@ function FixedTagList({tags}: {tags: string[]}) {
         <article>
           <div className="font-bold text-[28px]">테마별로 찾기</div>
         </article>
-        <div className="grid lg:grid-cols-5 grid-cols-2 gap-12 lg:gap-20 mt-4">
+        <div className="grid lg:grid-cols-4 grid-cols-2 gap-12 lg:gap-20 mt-4">
           
           {filteredBgImages.map((img) => (
             <div

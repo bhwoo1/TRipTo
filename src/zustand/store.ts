@@ -40,6 +40,7 @@ export const randomTagStore = create<randomTagStore>((set) => ({
     setDes: (state) => set({des: state})
 }));
 
+
 interface selectedAreaStore {
     selectedArea: string,
     setArea: (state: string) => void

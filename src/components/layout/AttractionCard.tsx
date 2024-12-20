@@ -2,13 +2,15 @@
 
 import { attraction } from "@/Type";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 function AttractionCard({ attraction }: { attraction: attraction }) {
+  const pathname = usePathname();
   return (
     <div className="cursor-pointer group">
       <article>
-        <div className="relative h-[240px] overflow-hidden">
+        <div className={`relative overflow-hidden ${pathname.startsWith('/explore/tag') ? "lg:h-[360px] h-[240px]" : "h-[240px]"}`}>
           <Image
             src={attraction.image}
             alt="attraction_img"

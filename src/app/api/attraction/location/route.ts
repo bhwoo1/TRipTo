@@ -4,13 +4,14 @@ import { NextResponse } from "next/server";
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const area = searchParams.get("area");
+    const id = searchParams.get("id");
 
     try {
-        if (!area) {
-            return NextResponse.json({ error: "Area is required" }, { status: 400 });
+        if (!area && !id) {
+            return NextResponse.json({ error: "Area or ID are required" }, { status: 400 });
         }
-
-        const shortedArea = area.split(' ').slice(0,1)[0];
+        else if (!id || area) {
+            const shortedArea = area?.split(' ').slice(0,1)[0];
 
         const searchedAttraction = await prisma.touristSpot.findMany({
             where: {
@@ -23,6 +24,25 @@ export async function GET(req: Request) {
         }
 
         return NextResponse.json(searchedAttraction, { status: 200 });
+        }
+        else if (id || !area) {
+            const searchedAttraction = await prisma.touristSpot.findUnique({
+                where: {
+                    id: Number(id)
+                }
+            });
+    
+            if (!searchedAttraction) {
+                return NextResponse.json({ error: "Attractions not found" }, { status: 404 }); 
+            }
+    
+            return NextResponse.json(searchedAttraction, { status: 200 });
+        }
+        else {
+            return NextResponse.json({ error: "Area and ID connot exist at the same time" }, { status: 400 });
+        }
+
+        
 
     } catch (error) {
         console.error(error);

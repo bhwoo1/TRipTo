@@ -14,8 +14,8 @@ import { redirect } from "next/navigation";
 
 function TagCardCarousel() {
   const cardClick = (tag: string) => {
-      redirect(`/explore/tag?tag=${tag}`);
-    };
+    redirect(`/explore/tag?tag=${tag}`);
+  };
   return (
     <div className="lg:w-screen">
       <Carousel className="">
@@ -32,11 +32,11 @@ function TagCardCarousel() {
         </div>
         <CarouselContent>
           {bgImages?.map((img) => (
-            <CarouselItem
-              key={img.tag}
-              className="basis-1/2 md:basis-1/3"
-            >
-              <div className="sm:w-1/2 lg:w-[280px] md:w-[300px]" onClick={() => cardClick(img.tag)}>
+            <CarouselItem key={img.tag} className="basis-1/2 md:basis-1/3">
+              <div
+                className="sm:w-1/2 lg:w-[280px] md:w-[300px]"
+                onClick={() => cardClick(img.tag)}
+              >
                 <TagCard img={img.img} tag={img.tag} />
               </div>
             </CarouselItem>
