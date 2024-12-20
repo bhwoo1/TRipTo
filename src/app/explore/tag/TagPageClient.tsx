@@ -21,7 +21,6 @@ const fetchPlace = async ({
   tag: string;
   isTagPage: boolean;
 }) => {
-  console.log("Fetching page:", page);
   const response = await axios.get("/api/attraction/tag", {
     params: {
       page: page,
@@ -29,8 +28,7 @@ const fetchPlace = async ({
       isTagPage: isTagPage,
     },
   });
-  console.log("Response data:", response.data);
-  return response.data; // { attractions: [...], hasNextPage: true/false }
+  return response.data; 
 };
 
 function TagPageClient() {

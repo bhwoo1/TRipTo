@@ -72,10 +72,6 @@ export async function GET(req: Request) {
 
       const hasNextPage = totalAttraction.length === 6 && totalAttraction.length < totalAttractionCount;
 
-      console.log(totalAttractionCount);
-      console.log(totalAttraction.length)
-      console.log(hasNextPage)
-
       return NextResponse.json(
         {
           attractions: totalAttraction,
