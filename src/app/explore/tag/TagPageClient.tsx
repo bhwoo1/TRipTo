@@ -66,6 +66,10 @@ function TagPageClient() {
   if (isLoading) return <Loading />;
   if (isError) return <Error />;
 
+  const cardClick = (id: number) => {
+    redirect(`/explore/place?id=${id}`);
+  } 
+
 
   return (
     <div>
@@ -88,7 +92,7 @@ function TagPageClient() {
       <div className="grid grid-cols-2 lg:grid-cols-2 gap-12 mt-24" key={data?.pages[0].name}>
         {data?.pages.map((page) =>
           page.attractions.map((place: attraction) => (
-            <div key={`${place.id}`}>
+            <div key={`${place.id}`} onClick={() => cardClick(place.id)}>
               <AttractionCard attraction={place} />
             </div>
           ))
