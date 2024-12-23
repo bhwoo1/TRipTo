@@ -12,7 +12,7 @@ function YourLocation() {
     // 네이버 지도 API 스크립트가 이미 로드되었는지 확인
     if (!isScriptLoaded.current) {
       const script = document.createElement("script");
-      script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=9uxzenoyy6&submodules=geocoder`;
+      script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}&submodules=geocoder`;
       script.async = true;
 
       script.onerror = () => alert("Naver Maps API 로드 실패");
