@@ -1,10 +1,13 @@
 import React from 'react'
 import SearchPageClient from './SearchPageClient'
+import SuspenseComponent from '@/components/SuspenseComponent'
 
 function page() {
   return (
     <div>
-      <SearchPageClient />
+      <SuspenseComponent>
+        <SearchPageClient /> 
+      </SuspenseComponent>
     </div>
   )
 }

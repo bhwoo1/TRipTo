@@ -1,10 +1,13 @@
 import React from 'react'
 import PlacePageClient from './PlacePageClient'
+import SuspenseComponent from '@/components/SuspenseComponent'
 
 function page() {
   return (
     <div>
-      <PlacePageClient />
+      <SuspenseComponent>
+        <PlacePageClient />
+      </SuspenseComponent>
     </div>
   )
 }
