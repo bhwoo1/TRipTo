@@ -30,6 +30,7 @@ function PlacePageClient({ id }: { id: number }) {
     isError,
   } = useQuery<attraction>(["place", id], () => fetchPlace({ id: Number(id) }), {
     enabled: id !== 0, // id가 0일 때는 쿼리를 실행하지 않음
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
