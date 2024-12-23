@@ -2,12 +2,14 @@ import { attraction } from "@/Type";
 import mysql from "mysql2/promise";
 import { NextResponse } from "next/server";
 
-const connection = await mysql.createConnection({
-  host: "my8003.gabiadb.com",
+const pool = mysql.createPool({
+  host: 'my8003.gabiadb.com',
   port: 3306,
-  user: "bhwoo1",
-  password: "vlald@1592",
-  database: "tripto",
+  user: 'bhwoo1',
+  password: 'vlald@1592',
+  database: 'tripto',
+  waitForConnections: true,
+  connectionLimit: 10,
 });
 
 export async function GET(req: Request) {
@@ -17,6 +19,7 @@ export async function GET(req: Request) {
   const take = 6;
 
   try {
+    const connection = await pool.getConnection();
     if (!keyword) {
       return NextResponse.json(
         { error: "Keyword is required" },
@@ -79,8 +82,5 @@ export async function GET(req: Request) {
       { error: "Failed to search attractions" },
       { status: 500 }
     );
-  } finally {
-    // 데이터베이스 연결 종료
-    await connection.end();
   }
 }

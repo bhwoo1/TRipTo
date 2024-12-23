@@ -1,81 +1,17 @@
-// import { prisma } from "@/prisma";
-// import { NextResponse } from "next/server";
-
-// export async function GET(req: Request) {
-//   const { searchParams } = new URL(req.url);
-//   const area = searchParams.get("area");
-//   const id = searchParams.get("id");
-
-//   try {
-    
-//     if (!area && !id) {
-//       return NextResponse.json(
-//         { error: "Area or ID are required" },
-//         { status: 400 }
-//       );
-//     } else if (!id || area) {
-//       const shortedArea = area?.split(" ").slice(0, 1)[0];
-
-
-//       const searchedAttraction = await prisma.touristSpot.findMany({
-//         where: {
-//           area: shortedArea,
-//         },
-//       });
-
-//       if (!searchedAttraction) {
-//         return NextResponse.json(
-//           { error: "Attractions not found" },
-//           { status: 404 }
-//         );
-//       }
-
-//       return NextResponse.json(searchedAttraction, { status: 200 });
-//     } else if (id || !area) {
-//       const searchedAttraction = await prisma.touristSpot.findUnique({
-//         where: {
-//           id: Number(id),
-//         },
-//       });
-
-//       if (!searchedAttraction) {
-//         return NextResponse.json(
-//           { error: "Attractions not found" },
-//           { status: 404 }
-//         );
-//       }
-
-//       return NextResponse.json(searchedAttraction, { status: 200 });
-//     } else {
-//       return NextResponse.json(
-//         { error: "Area and ID connot exist at the same time" },
-//         { status: 400 }
-//       );
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     return NextResponse.json(
-//       { error: "Failed to search attractions" },
-//       { status: 500 }
-//     );
-//   }
-// }
-
-
-
-
 import { attraction } from "@/Type";
 import mysql from "mysql2/promise";
 import { NextResponse } from "next/server";
 
 
 // MySQL 데이터베이스 연결 설정
-const connection = await mysql.createConnection({
+const pool = mysql.createPool({
   host: 'my8003.gabiadb.com',
   port: 3306,
   user: 'bhwoo1',
   password: 'vlald@1592',
   database: 'tripto',
+  waitForConnections: true,
+  connectionLimit: 10,
 });
 
 export async function GET(req: Request) {
@@ -84,6 +20,8 @@ export async function GET(req: Request) {
   const id = searchParams.get("id");
 
   try {
+    const connection = await pool.getConnection();
+
     if (!area && !id) {
       return NextResponse.json(
         { error: "Area or ID are required" },
@@ -116,7 +54,6 @@ export async function GET(req: Request) {
         [Number(id)]
       );
 
-      // `rows`는 QueryResult의 배열로 반환되므로, `rows`에서 실제 데이터만 가져옵니다.
       const touristSpot = rows as Array<attraction>;
 
       if (!touristSpot) {
@@ -139,8 +76,5 @@ export async function GET(req: Request) {
       { error: "Failed to search attractions" },
       { status: 500 }
     );
-  } finally {
-    // 데이터베이스 연결 종료
-    await connection.end();
   }
 }
