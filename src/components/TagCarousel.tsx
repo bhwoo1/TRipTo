@@ -52,11 +52,11 @@ function TagCarousel() {
   if (isError) return <Error />
 
   const cardClick = (id: number) => {
-    redirect(`/explore/place?id=${id}`);
+    redirect(`/explore/place/${id}`);
   }
 
   const tagClick = () => {
-    redirect(`/explore/tag?tag=${safeTag}`);
+    redirect(`/explore/${encodeURIComponent(safeTag)}`);
   }
 
   

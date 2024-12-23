@@ -13,6 +13,7 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: "Tag is required" }, { status: 400 });
     }
 
+
     if (!isTagPage) {
       // 전체 관광지의 수를 먼저 구함
       const totalCount = await prisma.touristSpot.count({

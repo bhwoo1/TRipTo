@@ -4,7 +4,7 @@ import Error from "@/components/Error";
 import Loading from "@/components/Loading";
 import { attraction } from "@/Type";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useQuery } from "react-query";
 import Image from "next/image";
 import { TiLocation } from "react-icons/ti";
@@ -22,26 +22,13 @@ const fetchPlace = async ({ id }: { id: number }) => {
 
 
 
-function PlacePageClient() {
-  const [id, setId] = useState<number>(0);
-
+function PlacePageClient({ id }: { id: number }) {
   
-
-  useEffect(() => {
-      const searchParams = new URLSearchParams(window.location.search);
-      const idParam = searchParams.get("id");
-      if (idParam) {
-        setId(Number(idParam));
-      }
-    }, []);
-
-
-
   const {
     data: place,
     isLoading,
     isError,
-  } = useQuery<attraction>(["place", id], () => fetchPlace({ id: id }), {
+  } = useQuery<attraction>(["place", id], () => fetchPlace({ id: Number(id) }), {
     enabled: id !== 0, // id가 0일 때는 쿼리를 실행하지 않음
   });
 

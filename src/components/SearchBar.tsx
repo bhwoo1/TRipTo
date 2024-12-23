@@ -10,7 +10,7 @@ function SearchBar() {
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
     if(keyword != "") {
-      redirect(`/explore/search?keyword=${encodeURIComponent(keyword)}`);
+      redirect(`/explore/search/${encodeURIComponent(keyword)}`);
     }
     else {
       alert('검색어를 입력하세요.');

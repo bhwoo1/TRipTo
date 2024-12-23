@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 
 function FixedTagList({tags}: {tags: string[]}) {
   const cardClick = (tag: string) => {
-    redirect(`/explore/tag?tag=${tag}`);
+    redirect(`/explore/${encodeURIComponent(tag)}`);
   };
 
   const filteredBgImages = bgImages.filter(image => 

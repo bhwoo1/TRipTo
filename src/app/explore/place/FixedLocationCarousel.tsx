@@ -43,7 +43,7 @@ function FixedLocationCarosuel({location, id}: {location: string, id: number}) {
   if (isError) return <Error />;
 
   const cardClick = (id: number) => {
-    redirect(`/explore/place?id=${id}`);
+    redirect(`/explore/place/${id}`);
   };
 
   return (

@@ -5,7 +5,7 @@ import Loading from "@/components/Loading";
 import { attraction, bgImages } from "@/Type";
 import axios from "axios";
 import { redirect } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useInfiniteQuery } from "react-query";
 import Image from "next/image";
 import { useInView } from "react-intersection-observer";
@@ -32,20 +32,11 @@ const fetchPlace = async ({
 };
 
 
-function TagPageClient() {
-  const [tag, setTag] = useState<string>("");
+function TagPageClient({tag}: {tag:string}) {
   const isTagPage = true;
   const { ref, inView } = useInView();
 
-  useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const tagParam = searchParams.get("tag");
-    if (tagParam) {
-      setTag(tagParam);
-    }
-  }, []);
-
-
+  const decodeTag = decodeURIComponent(tag);
 
 
   // Infinite Query
@@ -53,13 +44,13 @@ function TagPageClient() {
     useInfiniteQuery(
       ["placeList", tag],
       ({ pageParam = 0 }) =>
-        fetchPlace({ page: pageParam, tag: tag, isTagPage: isTagPage }),
+        fetchPlace({ page: pageParam, tag: decodeTag, isTagPage: isTagPage }),
       {
         getNextPageParam: (lastPage) => {
           const nextPage = lastPage.page + 1;
           return lastPage.hasNextPage ? nextPage : undefined;
         },
-        enabled: tag !== "", // tag가 빈 문자열일 때 쿼리를 실행하지 않음
+        enabled: decodeTag !== "", // tag가 빈 문자열일 때 쿼리를 실행하지 않음
       }
     );
 
@@ -70,7 +61,7 @@ function TagPageClient() {
   }, [inView, fetchNextPage]);
 
   // tag와 일치하는 bgImages 필터링
-  const matchingImage = bgImages.find((image) => image.tag === tag);
+  const matchingImage = bgImages.find((image) => image.tag === decodeTag);
 
   if (isLoading) return <Loading />;
   if (isError) return <Error />;
@@ -99,7 +90,7 @@ function TagPageClient() {
         )}
         <article className="m-4 flex flex-col gap-1 lg:gap-2">
           <div className="text-[20px] font-bold text-neutral-700">테마</div>
-          <div className="text-[40px] font-bold">{tag}</div>
+          <div className="text-[40px] font-bold">{decodeTag}</div>
         </article>
       </section>
 

@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 
 function TagList() {
   const cardClick = (tag: string) => {
-    redirect(`/explore/tag?tag=${tag}`);
+    redirect(`/explore/${encodeURIComponent(tag)}`);
   };
 
   

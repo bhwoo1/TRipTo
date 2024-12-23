@@ -28,18 +28,7 @@ const fetchPlace = async ({
 };
 
 
-function SearchPageClient() {
-  const [keyword, setKeyword] = React.useState<string>("");
-
-  useEffect(() => {
-      const searchParams = new URLSearchParams(window.location.search);
-      const keywordParam = searchParams.get("keyword");
-      if (keywordParam) {
-        setKeyword(keywordParam);
-      }
-    }, []);
-
-  
+function SearchPageClient({keyword}: {keyword: string}) {
 
   const { ref, inView } = useInView();
 

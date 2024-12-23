@@ -14,7 +14,7 @@ import { redirect } from "next/navigation";
 
 function TagCardCarousel() {
   const cardClick = (tag: string) => {
-    redirect(`/explore/tag?tag=${tag}`);
+    redirect(`/explore/${encodeURIComponent(tag)}`);
   };
   return (
     <div className="lg:w-screen">
