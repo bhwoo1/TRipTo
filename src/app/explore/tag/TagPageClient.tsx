@@ -8,8 +8,9 @@ import { redirect, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { useInfiniteQuery } from "react-query";
 import Image from "next/image";
-import { useInView } from 'react-intersection-observer';
+import { useInView } from "react-intersection-observer";
 import AttractionCard from "@/components/layout/AttractionCard";
+import SuspenseComponent from "@/components/SuspenseComponent";
 
 // 데이터를 가져오는 함수
 const fetchPlace = async ({
@@ -28,7 +29,7 @@ const fetchPlace = async ({
       isTagPage: isTagPage,
     },
   });
-  return response.data; 
+  return response.data;
 };
 
 function TagPageClient() {
@@ -40,16 +41,18 @@ function TagPageClient() {
   if (!tag) redirect("/");
 
   // Infinite Query
-  const {data, fetchNextPage, isLoading, isError, isFetchingNextPage } = useInfiniteQuery(
-    ["placeList", tag],
-    ({pageParam = 0}) => fetchPlace({ page: pageParam, tag: tag, isTagPage: isTagPage }),
-    {
-      getNextPageParam: (lastPage) => {
-        const nextPage = lastPage.page + 1;
-        return lastPage.hasNextPage ? nextPage : undefined;
-      },
-    }
-  );
+  const { data, fetchNextPage, isLoading, isError, isFetchingNextPage } =
+    useInfiniteQuery(
+      ["placeList", tag],
+      ({ pageParam = 0 }) =>
+        fetchPlace({ page: pageParam, tag: tag, isTagPage: isTagPage }),
+      {
+        getNextPageParam: (lastPage) => {
+          const nextPage = lastPage.page + 1;
+          return lastPage.hasNextPage ? nextPage : undefined;
+        },
+      }
+    );
 
   useEffect(() => {
     if (inView) {
@@ -65,40 +68,44 @@ function TagPageClient() {
 
   const cardClick = (id: number) => {
     redirect(`/explore/place?id=${id}`);
-  } 
-
+  };
 
   return (
-    <div>
-      <section className="flex lg:flex-row flex-col items-center lg:items-end text-center lg:text-left justify-center lg:justify-normal">
-        <div className="relative min-w-[200px] min-h-[200px] lg:w-[300px] lg:h-[300px] overflow-hidden m-4">
-          <Image
-            src={matchingImage?.img || ""}
-            fill
-            alt="place_image"
-            onContextMenu={(e) => e.preventDefault()}
-            onDragStart={(e) => e.preventDefault()}
-          />
-        </div>
-        <article className="m-4 flex flex-col gap-1 lg:gap-2">
-          <div className="text-[20px] font-bold text-neutral-700">테마</div>
-          <div className="text-[40px] font-bold">{tag}</div>
-        </article>
-      </section>
-      
-      <div className="grid grid-cols-2 lg:grid-cols-2 gap-12 mt-24" key={data?.pages[0].name}>
-        {data?.pages.map((page) =>
-          page.attractions.map((place: attraction) => (
-            <div key={`${place.id}`} onClick={() => cardClick(place.id)}>
-              <AttractionCard attraction={place} />
-            </div>
-          ))
-        )}
-      </div>
+    <SuspenseComponent>
+      <div>
+        <section className="flex lg:flex-row flex-col items-center lg:items-end text-center lg:text-left justify-center lg:justify-normal">
+          <div className="relative min-w-[200px] min-h-[200px] lg:w-[300px] lg:h-[300px] overflow-hidden m-4">
+            <Image
+              src={matchingImage?.img || ""}
+              fill
+              alt="place_image"
+              onContextMenu={(e) => e.preventDefault()}
+              onDragStart={(e) => e.preventDefault()}
+            />
+          </div>
+          <article className="m-4 flex flex-col gap-1 lg:gap-2">
+            <div className="text-[20px] font-bold text-neutral-700">테마</div>
+            <div className="text-[40px] font-bold">{tag}</div>
+          </article>
+        </section>
 
-      {/* 무한 스크롤을 위한 감지 요소 */}
-      {isFetchingNextPage ? <Loading /> : <div ref={ref} className="h-10" /> }
-    </div>
+        <div
+          className="grid grid-cols-2 lg:grid-cols-2 gap-12 mt-24"
+          key={data?.pages[0].name}
+        >
+          {data?.pages.map((page) =>
+            page.attractions.map((place: attraction) => (
+              <div key={`${place.id}`} onClick={() => cardClick(place.id)}>
+                <AttractionCard attraction={place} />
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* 무한 스크롤을 위한 감지 요소 */}
+        {isFetchingNextPage ? <Loading /> : <div ref={ref} className="h-10" />}
+      </div>
+    </SuspenseComponent>
   );
 }
 

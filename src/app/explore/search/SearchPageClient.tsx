@@ -4,6 +4,7 @@ import Error from "@/components/Error";
 import AttractionCard from "@/components/layout/AttractionCard";
 import Loading from "@/components/Loading";
 import SearchBar from "@/components/SearchBar";
+import SuspenseComponent from "@/components/SuspenseComponent";
 import { attraction } from "@/Type";
 import axios from "axios";
 import { redirect, useSearchParams } from "next/navigation";
@@ -64,6 +65,7 @@ function SearchPageClient() {
   };
 
   return (
+    <SuspenseComponent>
     <div>
       <div className="mt-24">
         <SearchBar />
@@ -97,6 +99,7 @@ function SearchPageClient() {
       {/* 무한 스크롤을 위한 감지 요소 */}
       {isFetchingNextPage ? <Loading /> : <div ref={ref} className="h-10" />}
     </div>
+    </SuspenseComponent>
   );
 }
 

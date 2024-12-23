@@ -11,6 +11,7 @@ import Image from "next/image";
 import { TiLocation } from "react-icons/ti";
 import FixedLocationCarosuel from "./FixedLocationCarousel";
 import FixedTagList from "./FixedTagList";
+import SuspenseComponent from "@/components/SuspenseComponent";
 
 const fetchPlace = async ({ id }: { id: number }) => {
   const response = await axios.get("/api/attraction/location", {
@@ -37,6 +38,7 @@ function PlacePageClient() {
   if (isError) return <Error />;
 
   return (
+    <SuspenseComponent>
     <div>
       <section className="flex lg:flex-row flex-col items-center text-center lg:text-left justify-center lg:justify-normal">
         <div className="relative min-w-[200px] min-h-[200px] lg:w-[300px] lg:h-[300px] overflow-hidden m-4">
@@ -83,6 +85,7 @@ function PlacePageClient() {
           <FixedTagList tags={place?.tags ?? []} />
       </div>
     </div>
+    </SuspenseComponent>
   );
 }
 
