@@ -36,7 +36,7 @@ export async function GET(req: Request) {
     }
 
     const [row] = await connection.execute(
-      `SELECT * AS totalCount
+      `SELECT *
        FROM TouristSpot
        WHERE name LIKE CONCAT('%', ?, '%')
           OR area LIKE CONCAT('%', ?, '%')
