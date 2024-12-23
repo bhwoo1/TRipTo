@@ -1,16 +1,15 @@
-"use client";
+"use client"
 
 import Error from "@/components/Error";
 import Loading from "@/components/Loading";
 import { attraction, bgImages } from "@/Type";
 import axios from "axios";
-import { redirect, useSearchParams } from "next/navigation";
-import React, { useEffect } from "react";
+import { redirect } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { useInfiniteQuery } from "react-query";
 import Image from "next/image";
 import { useInView } from "react-intersection-observer";
 import AttractionCard from "@/components/layout/AttractionCard";
-import SuspenseComponent from "@/components/SuspenseComponent";
 
 // 데이터를 가져오는 함수
 const fetchPlace = async ({
@@ -32,13 +31,22 @@ const fetchPlace = async ({
   return response.data;
 };
 
+
 function TagPageClient() {
-  const searchParams = useSearchParams();
-  const tag = searchParams.get("tag"); // 태그 가져오기
+  const [tag, setTag] = useState<string>("");
   const isTagPage = true;
   const { ref, inView } = useInView();
 
-  if (!tag) redirect("/");
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const tagParam = searchParams.get("tag");
+    if (tagParam) {
+      setTag(tagParam);
+    }
+  }, []);
+
+
+
 
   // Infinite Query
   const { data, fetchNextPage, isLoading, isError, isFetchingNextPage } =
@@ -51,6 +59,7 @@ function TagPageClient() {
           const nextPage = lastPage.page + 1;
           return lastPage.hasNextPage ? nextPage : undefined;
         },
+        enabled: tag !== "", // tag가 빈 문자열일 때 쿼리를 실행하지 않음
       }
     );
 
@@ -71,9 +80,9 @@ function TagPageClient() {
   };
 
   return (
-    <SuspenseComponent>
-      <div>
-        <section className="flex lg:flex-row flex-col items-center lg:items-end text-center lg:text-left justify-center lg:justify-normal">
+    <div>
+      <section className="flex lg:flex-row flex-col items-center lg:items-end text-center lg:text-left justify-center lg:justify-normal">
+      {matchingImage?.img ? (
           <div className="relative min-w-[200px] min-h-[200px] lg:w-[300px] lg:h-[300px] overflow-hidden m-4">
             <Image
               src={matchingImage?.img || ""}
@@ -83,29 +92,33 @@ function TagPageClient() {
               onDragStart={(e) => e.preventDefault()}
             />
           </div>
-          <article className="m-4 flex flex-col gap-1 lg:gap-2">
-            <div className="text-[20px] font-bold text-neutral-700">테마</div>
-            <div className="text-[40px] font-bold">{tag}</div>
-          </article>
-        </section>
+        ) : (
+          <div className="relative min-w-[200px] min-h-[200px] lg:w-[300px] lg:h-[300px] overflow-hidden m-4">
+            <div className="bg-gray-300 w-full h-full"></div>
+          </div>
+        )}
+        <article className="m-4 flex flex-col gap-1 lg:gap-2">
+          <div className="text-[20px] font-bold text-neutral-700">테마</div>
+          <div className="text-[40px] font-bold">{tag}</div>
+        </article>
+      </section>
 
-        <div
-          className="grid grid-cols-2 lg:grid-cols-2 gap-12 mt-24"
-          key={data?.pages[0].name}
-        >
-          {data?.pages.map((page) =>
-            page.attractions.map((place: attraction) => (
-              <div key={`${place.id}`} onClick={() => cardClick(place.id)}>
-                <AttractionCard attraction={place} />
-              </div>
-            ))
-          )}
-        </div>
-
-        {/* 무한 스크롤을 위한 감지 요소 */}
-        {isFetchingNextPage ? <Loading /> : <div ref={ref} className="h-10" />}
+      <div
+        className="grid grid-cols-2 lg:grid-cols-2 gap-12 mt-24"
+        key={data?.pages[0].name}
+      >
+        {data?.pages.map((page) =>
+          page.attractions.map((place: attraction) => (
+            <div key={`${place.id}`} onClick={() => cardClick(place.id)}>
+              <AttractionCard attraction={place} />
+            </div>
+          ))
+        )}
       </div>
-    </SuspenseComponent>
+
+      {/* 무한 스크롤을 위한 감지 요소 */}
+      {isFetchingNextPage ? <Loading /> : <div ref={ref} className="h-10" />}
+    </div>
   );
 }
 

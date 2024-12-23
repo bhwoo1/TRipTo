@@ -4,14 +4,12 @@ import Error from "@/components/Error";
 import Loading from "@/components/Loading";
 import { attraction } from "@/Type";
 import axios from "axios";
-import { redirect, useSearchParams } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import Image from "next/image";
 import { TiLocation } from "react-icons/ti";
 import FixedLocationCarosuel from "./FixedLocationCarousel";
 import FixedTagList from "./FixedTagList";
-import SuspenseComponent from "@/components/SuspenseComponent";
 
 const fetchPlace = async ({ id }: { id: number }) => {
   const response = await axios.get("/api/attraction/location", {
@@ -22,23 +20,35 @@ const fetchPlace = async ({ id }: { id: number }) => {
   return response.data;
 };
 
-function PlacePageClient() {
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id"); // id 값 가져오기
 
-  if (!id) redirect("/");
+
+function PlacePageClient() {
+  const [id, setId] = useState<number>(0);
+
+  
+
+  useEffect(() => {
+      const searchParams = new URLSearchParams(window.location.search);
+      const idParam = searchParams.get("id");
+      if (idParam) {
+        setId(Number(idParam));
+      }
+    }, []);
+
+
 
   const {
     data: place,
     isLoading,
     isError,
-  } = useQuery<attraction>(["place", id], () => fetchPlace({ id: Number(id) }));
+  } = useQuery<attraction>(["place", id], () => fetchPlace({ id: id }), {
+    enabled: id !== 0, // id가 0일 때는 쿼리를 실행하지 않음
+  });
 
   if (isLoading) return <Loading />;
   if (isError) return <Error />;
 
   return (
-    <SuspenseComponent>
     <div>
       <section className="flex lg:flex-row flex-col items-center text-center lg:text-left justify-center lg:justify-normal">
         <div className="relative min-w-[200px] min-h-[200px] lg:w-[300px] lg:h-[300px] overflow-hidden m-4">
@@ -82,10 +92,9 @@ function PlacePageClient() {
         <FixedLocationCarosuel location={String(place?.area)} id={Number(id)} />
       </div>
       <div className="flex justify-start items-center mt-24 w-full">
-          <FixedTagList tags={place?.tags ?? []} />
+        <FixedTagList tags={place?.tags ?? []} />
       </div>
     </div>
-    </SuspenseComponent>
   );
 }
 

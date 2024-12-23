@@ -1,13 +1,12 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import SearchPageClient from './SearchPageClient'
-import SuspenseComponent from '@/components/SuspenseComponent'
 
 function page() {
   return (
     <div>
-      <SuspenseComponent>
+      <Suspense>
         <SearchPageClient /> 
-      </SuspenseComponent>
+      </Suspense>
     </div>
   )
 }

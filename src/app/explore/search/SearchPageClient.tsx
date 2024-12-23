@@ -4,10 +4,9 @@ import Error from "@/components/Error";
 import AttractionCard from "@/components/layout/AttractionCard";
 import Loading from "@/components/Loading";
 import SearchBar from "@/components/SearchBar";
-import SuspenseComponent from "@/components/SuspenseComponent";
 import { attraction } from "@/Type";
 import axios from "axios";
-import { redirect, useSearchParams } from "next/navigation";
+import { redirect } from "next/navigation";
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
@@ -28,12 +27,22 @@ const fetchPlace = async ({
   return response.data;
 };
 
+
 function SearchPageClient() {
-  const searchParams = useSearchParams();
-  const keyword = searchParams.get("keyword");
+  const [keyword, setKeyword] = React.useState<string>("");
+
+  useEffect(() => {
+      const searchParams = new URLSearchParams(window.location.search);
+      const keywordParam = searchParams.get("keyword");
+      if (keywordParam) {
+        setKeyword(keywordParam);
+      }
+    }, []);
+
+  
+
   const { ref, inView } = useInView();
 
-  if (!keyword) redirect("/");
 
   const { data, fetchNextPage, isLoading, isError, isFetchingNextPage } =
     useInfiniteQuery(
@@ -44,6 +53,7 @@ function SearchPageClient() {
           const nextPage = lastPage.page + 1;
           return lastPage.hasNextPage ? nextPage : undefined;
         },
+        enabled: keyword !== "", // tag가 빈 문자열일 때 쿼리를 실행하지 않음
       }
     );
 
@@ -65,7 +75,6 @@ function SearchPageClient() {
   };
 
   return (
-    <SuspenseComponent>
     <div>
       <div className="mt-24">
         <SearchBar />
@@ -99,7 +108,6 @@ function SearchPageClient() {
       {/* 무한 스크롤을 위한 감지 요소 */}
       {isFetchingNextPage ? <Loading /> : <div ref={ref} className="h-10" />}
     </div>
-    </SuspenseComponent>
   );
 }
 

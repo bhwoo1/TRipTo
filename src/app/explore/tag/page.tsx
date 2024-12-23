@@ -1,13 +1,12 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import TagPageClient from './TagPageClient'
-import SuspenseComponent from '@/components/SuspenseComponent'
 
 function page() {
   return (
     <div>
-      <SuspenseComponent>
+      <Suspense>
         <TagPageClient />
-      </SuspenseComponent>
+      </Suspense>
     </div>
   )
 }

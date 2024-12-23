@@ -1,13 +1,12 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import PlacePageClient from './PlacePageClient'
-import SuspenseComponent from '@/components/SuspenseComponent'
 
 function page() {
   return (
     <div>
-      <SuspenseComponent>
+      <Suspense>
         <PlacePageClient />
-      </SuspenseComponent>
+      </Suspense>
     </div>
   )
 }
