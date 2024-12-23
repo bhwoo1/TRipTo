@@ -56,7 +56,7 @@ export async function GET(req: Request) {
 
       const touristSpot = rows as Array<attraction>;
 
-      if (!touristSpot) {
+      if (touristSpot.length === 0) {
         return NextResponse.json(
           { error: "Attractions not found" },
           { status: 404 }
