@@ -9,6 +9,7 @@
     "lint": "next lint",
     "postinstall": "prisma generate"
   },
+    "type": "module",
   "dependencies": {
     "@prisma/client": "^6.0.1",
     "@radix-ui/react-select": "^2.1.4",
@@ -20,6 +21,7 @@
     "embla-carousel-react": "^8.5.1",
     "install": "^0.13.0",
     "lucide-react": "^0.468.0",
+    "mysql2": "^3.11.5",
     "next": "15.1.0",
     "next-themes": "^0.4.4",
     "prisma": "^6.0.1",

@@ -9,6 +9,7 @@ export interface attraction {
     tags: string[]
 }
 
+
 export const bgImages = [
     {
       tag: "산책",
