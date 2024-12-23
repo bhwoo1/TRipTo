@@ -71,7 +71,7 @@ function SearchPageClient({keyword}: {keyword: string}) {
       <section className="flex justify-between mt-12">
         <div className="flex flex-row items-end gap-4">
           검색어:
-          <p className="text-[25px] font-bold">{keyword}</p>
+          <p className="text-[25px] font-bold">{decodeURIComponent(keyword)}</p>
         </div>
         <button
           onClick={cancelClick}

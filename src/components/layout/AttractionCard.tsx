@@ -10,7 +10,7 @@ function AttractionCard({ attraction }: { attraction: attraction }) {
   return (
     <div className="cursor-pointer group">
       <article>
-        <div className={`relative overflow-hidden ${pathname.startsWith('/explore/tag') || pathname.startsWith('/explore/search') ? "lg:h-[360px] h-[240px]" : "h-[240px]"}`}>
+        <div className={`relative overflow-hidden ${pathname.startsWith(`/explore`) || pathname.startsWith('/explore/search') ? "lg:h-[360px] h-[240px]" : "h-[240px]"}`}>
           <Image
             src={attraction.image}
             alt="attraction_img"
