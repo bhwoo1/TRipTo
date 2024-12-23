@@ -43,5 +43,8 @@ export async function GET(req: Request) {
     } catch (error) {
         console.error(error);
         return NextResponse.json({error: "Failed to search attractions"}, { status: 500 });
-    }
+    } finally {
+        // 데이터베이스 연결 종료
+        await connection.end();
+      }
 }
