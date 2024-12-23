@@ -6,6 +6,7 @@ import { NextResponse } from "next/server";
 // MySQL 데이터베이스 연결 설정
 const connection = await mysql.createConnection({
   host: 'my8003.gabiadb.com',
+  port: 3306,
   user: 'bhwoo1',
   password: 'vlald@1592',
   database: 'tripto',

@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 
 const connection = await mysql.createConnection({
   host: "my8003.gabiadb.com",
+  port: 3306,
   user: "bhwoo1",
   password: "vlald@1592",
   database: "tripto",
