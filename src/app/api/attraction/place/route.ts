@@ -32,12 +32,6 @@ export async function GET(req: Request) {
         const searchedAttraction = rows as Array<attraction>;
 
 
-        // const searchedAttraction = await prisma.touristSpot.findUnique({
-        //     where: {
-        //         id: Number(id)
-        //     }
-        // });
-
         if (!searchedAttraction) {
             return NextResponse.json({ error: "Attractions not found" }, { status: 404 }); 
         }

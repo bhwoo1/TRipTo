@@ -12,7 +12,7 @@ import FixedLocationCarosuel from "./FixedLocationCarousel";
 import FixedTagList from "./FixedTagList";
 
 const fetchPlace = async ({ id }: { id: number }) => {
-  const response = await axios.get("/api/attraction/location", {
+  const response = await axios.get("/api/attraction/place", {
     params: {
       id: id,
     },

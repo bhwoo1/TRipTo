@@ -50,16 +50,6 @@ export async function GET(req: Request) {
 
       const searchedAttraction = rows as Array<attraction>;
 
-      // const searchedAttraction = await prisma.touristSpot.findMany({
-      //   where: {
-      //     tags: {
-      //       array_contains: [tag],
-      //     },
-      //   },
-      //   skip: randomOffset,
-      //   take: 5,
-      // });
-
       if (searchedAttraction.length === 0) {
         return NextResponse.json(
           { error: "Attractions not found" },
@@ -78,7 +68,9 @@ export async function GET(req: Request) {
       }
 
       const [row] = await connection.execute(
-        `SELECT COUNT(*) AS totalCount FROM TouristSpot WHERE JSON_CONTAINS(tags, '["${tag}"]')`
+        `SELECT * FROM TouristSpot
+         WHERE JSON_CONTAINS(tags, ?)`,
+        [JSON.stringify([tag])]
       );
 
       const totalAttraction = row as Array<attraction>;
