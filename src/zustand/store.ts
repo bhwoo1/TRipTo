@@ -1,3 +1,4 @@
+import { attraction } from "@/Type";
 import { create } from "zustand";
 
 
@@ -49,4 +50,14 @@ interface selectedAreaStore {
 export const selectedAreaStore = create<selectedAreaStore>((set) => ({
     selectedArea: "서울특별시",
     setArea: (state) => set({selectedArea: state})
+}))
+
+interface selectedAttraction {
+    Attraction: attraction | undefined,
+    setAttraction: (state: attraction) => void
+}
+
+export const selectedAttraction = create<selectedAttraction>((set) => ({
+    Attraction: undefined,
+    setAttraction: (state) => set({Attraction: state})
 }))

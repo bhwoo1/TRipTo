@@ -15,6 +15,7 @@ import { redirect } from "next/navigation";
 import Loading from "@/components/Loading";
 import Error from "@/components/Error";
 import AttractionCard from "@/components/layout/AttractionCard";
+import { selectedAttraction } from "@/zustand/store";
 
 const fetchAttraction = async ({ location }: { location: string }) => {
   const response = await axios("/api/attraction/location", {
@@ -26,7 +27,7 @@ const fetchAttraction = async ({ location }: { location: string }) => {
 };
 
 function FixedLocationCarosuel({location, id}: {location: string, id: number}) {
-
+  const {setAttraction} = selectedAttraction();
   const {
     data: locationAttraction,
     isLoading,
@@ -42,9 +43,10 @@ function FixedLocationCarosuel({location, id}: {location: string, id: number}) {
   if (isLoading) return <Loading />;
   if (isError) return <Error />;
 
-  const cardClick = (id: number) => {
-    redirect(`/explore/place/${id}`);
-  };
+  const cardClick = (attraction: attraction) => {
+      setAttraction(attraction);
+      redirect(`/explore/place/${attraction.id}`);
+    };
 
   return (
     <div className="lg:w-full">
@@ -72,7 +74,7 @@ function FixedLocationCarosuel({location, id}: {location: string, id: number}) {
             >
               <div
                 className="sm:w-1/2 lg:w-[280px] md:w-[300px]"
-                onClick={() => cardClick(attraction.id)}
+                onClick={() => cardClick(attraction)}
               >
                 <AttractionCard attraction={attraction} />
               </div>

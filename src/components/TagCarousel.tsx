@@ -1,6 +1,6 @@
 "use client";
 
-import { randomTagStore } from "@/zustand/store";
+import { randomTagStore, selectedAttraction } from "@/zustand/store";
 import React from "react";
 import {
   Carousel,
@@ -32,6 +32,7 @@ const fetchAttraction = async ({ tag }: {tag: string}) => {
 
 function TagCarousel() {
   const { tag } = randomTagStore();
+  const {setAttraction} = selectedAttraction();
   
 
   const safeTag = tag ??  "";
@@ -51,9 +52,10 @@ function TagCarousel() {
   if (isLoading) return <Loading />
   if (isError) return <Error />
 
-  const cardClick = (id: number) => {
-    redirect(`/explore/place/${id}`);
-  }
+  const cardClick = (attraction: attraction) => {
+      setAttraction(attraction);
+      redirect(`/explore/place/${attraction.id}`);
+    };
 
   const tagClick = () => {
     redirect(`/explore/${encodeURIComponent(safeTag)}`);
@@ -82,7 +84,7 @@ function TagCarousel() {
               key={attraction.id}
               className="basis-1/2 xl:basis-1/5 lg:basis-1/3"
             >
-              <div className="sm:w-1/2 lg:w-[280px] md:w-[300px]" onClick={() => cardClick(attraction.id)}>
+              <div className="sm:w-1/2 lg:w-[280px] md:w-[300px]" onClick={() => cardClick(attraction)}>
                 <AttractionCard attraction={attraction} />
               </div>
             </CarouselItem>

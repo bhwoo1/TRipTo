@@ -10,6 +10,7 @@ import { useInfiniteQuery } from "react-query";
 import Image from "next/image";
 import { useInView } from "react-intersection-observer";
 import AttractionCard from "@/components/layout/AttractionCard";
+import { selectedAttraction } from "@/zustand/store";
 
 // 데이터를 가져오는 함수
 const fetchPlace = async ({
@@ -35,6 +36,7 @@ const fetchPlace = async ({
 function TagPageClient({tag}: {tag:string}) {
   const isTagPage = true;
   const { ref, inView } = useInView();
+  const {setAttraction} = selectedAttraction();
 
   const decodeTag = decodeURIComponent(tag);
 
@@ -66,9 +68,10 @@ function TagPageClient({tag}: {tag:string}) {
   if (isLoading) return <Loading />;
   if (isError) return <Error />;
 
-  const cardClick = (id: number) => {
-    redirect(`/explore/place?id=${id}`);
-  };
+  const cardClick = (place: attraction) => {
+      setAttraction(place);
+      redirect(`/explore/place/${place.id}`);
+    };
 
   return (
     <div>
@@ -100,7 +103,7 @@ function TagPageClient({tag}: {tag:string}) {
       >
         {data?.pages.map((page) =>
           page.attractions.map((place: attraction) => (
-            <div key={`${place.id}`} onClick={() => cardClick(place.id)}>
+            <div key={`${place.id}`} onClick={() => cardClick(place)}>
               <AttractionCard attraction={place} />
             </div>
           ))

@@ -1,6 +1,6 @@
 "use client";
 
-import { selectedAreaStore, userLocationStore } from "@/zustand/store";
+import { selectedAreaStore, selectedAttraction, userLocationStore } from "@/zustand/store";
 import React from "react";
 import {
   Carousel,
@@ -31,6 +31,7 @@ function LocationCarosuel() {
   const pathname = usePathname();
   const { locationArea } = userLocationStore();
   const { selectedArea } = selectedAreaStore();
+  const {setAttraction} = selectedAttraction();
   const area = locationArea.split(" ").slice(0, 1);
 
   const areaToUse = pathname === "/explore" ? selectedArea : locationArea;
@@ -48,8 +49,9 @@ function LocationCarosuel() {
   if (isLoading) return <Loading />;
   if (isError) return <Error />;
 
-  const cardClick = (id: number) => {
-    redirect(`/explore/place/${id}`);
+  const cardClick = (attraction: attraction) => {
+    setAttraction(attraction);
+    redirect(`/explore/place/${attraction.id}`);
   };
 
   return (
@@ -87,7 +89,7 @@ function LocationCarosuel() {
             >
               <div
                 className="sm:w-1/2 lg:w-[280px] md:w-[300px]"
-                onClick={() => cardClick(attraction.id)}
+                onClick={() => cardClick(attraction)}
               >
                 <AttractionCard attraction={attraction} />
               </div>
