@@ -32,7 +32,6 @@ export async function GET(req: Request) {
 
       return NextResponse.json(searchedAttraction, { status: 200 });
     } else if (id || !area) {
-        console.log(id)
       const searchedAttraction = await prisma.touristSpot.findUnique({
         where: {
           id: Number(id),

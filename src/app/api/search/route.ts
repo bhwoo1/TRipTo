@@ -23,9 +23,6 @@ export async function GET(req: Request) {
       );
     }
 
-    console.log(keyword);
-    console.log(page);
-
     const totalAttractionCount = await prisma.touristSpot.count({
       where: {
         OR: [
