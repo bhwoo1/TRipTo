@@ -42,10 +42,10 @@ function PlacePageClient({ id }: { id: number }) {
   }, [placeData]);
 
   // 로딩 중일 때는 로딩 화면 표시
-  if (isLoading) return <Loading />;
+  if (isLoading || !placeData) return <Loading />;
 
   // 데이터가 없거나 오류가 발생한 경우 에러 처리
-  if (isError || !placeData) return <Error />;
+  if (isError) return <Error />;
 
   // 데이터가 로딩된 후 렌더링
   return (
