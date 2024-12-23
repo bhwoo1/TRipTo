@@ -4,7 +4,7 @@ import Error from "@/components/Error";
 import Loading from "@/components/Loading";
 import { attraction } from "@/Type";
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useQuery } from "react-query";
 import Image from "next/image";
 import { TiLocation } from "react-icons/ti";
@@ -32,8 +32,14 @@ function PlacePageClient({ id }: { id: number }) {
     enabled: id !== 0, // id가 0일 때는 쿼리를 실행하지 않음
   });
 
+  useEffect(() => {
+    console.log(place);
+  }, [place]);
+
   if (isLoading) return <Loading />;
   if (isError) return <Error />;
+
+  
 
   return (
     <div>
