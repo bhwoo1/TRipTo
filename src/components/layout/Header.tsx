@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import SearchBar from "../SearchBar";
+// import SearchBar from "../SearchBar";
 import Logo from "./Logo";
 import BgImg from "./BgImg";
 import { usePathname } from "next/navigation";
@@ -26,9 +26,9 @@ function Header({ children }: { children: React.ReactNode }) {
             <Logo />
           </div>
         </div>
-        <div className="lg:w-[480px] w-[240px] mt-2 p-4">
+        {/* <div className="lg:w-[480px] w-[240px] mt-2 p-4">
           <SearchBar />
-        </div>
+        </div> */}
       </section>
       <div className="relative z-10">
         <div className="h-[calc(100%-200px)] ">{children}</div>

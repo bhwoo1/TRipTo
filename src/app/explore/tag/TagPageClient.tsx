@@ -53,7 +53,6 @@ function TagPageClient() {
 
   useEffect(() => {
     if (inView) {
-      console.log("In view: Fetching next page");
       fetchNextPage();
     }
   }, [inView, fetchNextPage]);

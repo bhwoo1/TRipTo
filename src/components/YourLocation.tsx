@@ -14,11 +14,12 @@ function YourLocation() {
       const script = document.createElement("script");
       script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverMapApiKey}&submodules=geocoder`;
       script.async = true;
+
       script.onerror = () => alert("Naver Maps API 로드 실패");
 
       script.onload = () => {
         isScriptLoaded.current = true; // 스크립트 로드 완료 플래그 설정
-        getLocationAndGeocode(); // 위치 가져오기 및 reverseGeocode 실행
+        waitForNaverMapsReady(); // API 준비 확인
       };
 
       document.head.appendChild(script);
@@ -27,9 +28,18 @@ function YourLocation() {
         document.head.removeChild(script); // 컴포넌트 언마운트 시 스크립트 제거
       };
     } else {
-      getLocationAndGeocode(); // 스크립트가 이미 로드된 경우 바로 실행
+      waitForNaverMapsReady(); // 스크립트가 이미 로드된 경우 바로 API 준비 확인
     }
-  }, [naverMapApiKey]); // `naverMapApiKey`만 의존성 배열에 추가
+  }, [naverMapApiKey]);
+
+  const waitForNaverMapsReady = () => {
+    const interval = setInterval(() => {
+      if (window.naver && window.naver.maps && window.naver.maps.Service) {
+        clearInterval(interval); // 준비 완료 시 반복 중단
+        getLocationAndGeocode(); // 위치 정보 가져오기 시작
+      }
+    }, 100); // 100ms 단위로 API 준비 확인
+  };
 
   const getLocationAndGeocode = () => {
     if (navigator.geolocation) {
@@ -50,7 +60,6 @@ function YourLocation() {
     }
   };
 
-  // Reverse geocoding
   const reverseGeocode = (lat: number, lng: number) => {
     if (window.naver && window.naver.maps) {
       window.naver.maps.Service.reverseGeocode(
