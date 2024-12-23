@@ -28,7 +28,9 @@ export async function GET(req: Request) {
     if (!isTagPage) {
       // 전체 관광지의 수를 먼저 구함
       const [row] = await connection.execute(
-        `SELECT * AS totalCount FROM TouristSpot WHERE JSON_CONTAINS(tags, '["${tag}"]')`
+        `SELECT * AS totalCount FROM TouristSpot
+         WHERE JSON_CONTAINS(tags, ?)`,
+        [JSON.stringify([tag])]
       );
 
       const totalAttraction = row as Array<attraction>;
