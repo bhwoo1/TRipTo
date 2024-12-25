@@ -28,9 +28,9 @@ function Place({place, id}: {place: attraction, id: number}) {
               {place!.area} {place!.subarea}
             </div>
             <div className="text-[12px] flex flex-row gap-3 justify-center lg:justify-normal">
-              {/* {place?.tags.map((tag) => (
+              {place?.tags.map((tag) => (
                 <div key={tag} className="text-neutral-600 font-bold">{tag}</div>
-              ))} */}
+              ))}
             </div>
             <div className="mt-4 lg:mt-32">
               <button
