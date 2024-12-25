@@ -74,7 +74,7 @@ function LocationCarosuel() {
             </article>
           )}
 
-          <div className="relative">
+          <div className="relative left-[-80px]">
             <div className="absolute">
               <CarouselPrevious />
               <CarouselNext />
