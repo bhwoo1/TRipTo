@@ -59,7 +59,7 @@ function FixedLocationCarosuel({location, id}: {location: string, id: number}) {
               </div>
             </article>
 
-          <div className="relative left-[-100px]">
+          <div className="relative left-[-60px]">
             <div className="absolute">
               <CarouselPrevious />
               <CarouselNext />

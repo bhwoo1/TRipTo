@@ -71,7 +71,7 @@ function TagCarousel() {
           <article>
           <div className="font-bold text-[28px]">테마: {safeTag}</div>
           </article>
-          <div className="relative left-[-100px]">
+          <div className="relative left-[-60px]">
             <div className="absolute">
               <CarouselPrevious />
               <CarouselNext />
