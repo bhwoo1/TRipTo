@@ -6,7 +6,7 @@ function Footer({children}: {
 }) {
   return (
     <div className='flex flex-col'>
-        <div className='h-[calc(100%-100px)]'>
+        <div className='h-[calc(100%-100px)] mb-24'>
         {/* <div className="flex-grow"> */}
             {children}
         </div>
