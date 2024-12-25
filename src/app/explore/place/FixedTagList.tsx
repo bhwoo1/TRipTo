@@ -25,7 +25,7 @@ function FixedTagList({tags}: {tags: string[]}) {
           {filteredBgImages.map((img) => (
             <div
               key={img.tag}
-              className="w-[150px] h-[150px] lg:w-[220px] lg:h-auto md:h-auto md:w-[300px]"
+              className="w-[100px] h-[100px] lg:w-[220px] lg:h-auto md:h-auto md:w-[300px]"
               onClick={() => cardClick(img.tag)}
             >
               <TagCard img={img.img} tag={img.tag} />
