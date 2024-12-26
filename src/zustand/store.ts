@@ -1,5 +1,6 @@
 import { attraction } from "@/Type";
 import { create } from "zustand";
+import { persist, createJSONStorage } from 'zustand/middleware'
 
 
 interface userLocationStore {
@@ -57,7 +58,15 @@ interface selectedAttraction {
     setAttraction: (state: attraction) => void
 }
 
-export const selectedAttraction = create<selectedAttraction>((set) => ({
-    Attraction: undefined,
-    setAttraction: (state) => set({Attraction: state})
-}))
+export const selectedAttraction = create(
+    persist<selectedAttraction>(
+      (set) => ({
+        Attraction: undefined,
+        setAttraction: (state) => set({ Attraction: state }),
+      }),
+      {
+        name: "selectedStore", // 스토어 이름
+        storage: createJSONStorage(() => sessionStorage), // sessionStorage를 사용
+      }
+    )
+  );
