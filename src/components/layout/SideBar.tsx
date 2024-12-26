@@ -17,7 +17,7 @@ function SideBar({children}: {
                 <Navigator isFooter={false} />
             </div>
         </nav>
-        <div className='w-full lg:w-[calc(100%-240px)] overflow-x-hidden'>
+        <div className='w-full lg:w-[calc(100%-240px)] overflow-auto'>
             {children}
         </div>
     </div>
