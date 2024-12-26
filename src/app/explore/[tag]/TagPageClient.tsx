@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Error from "@/components/Error";
 import Loading from "@/components/Loading";
@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useInView } from "react-intersection-observer";
 import AttractionCard from "@/components/layout/AttractionCard";
 import { selectedAttraction } from "@/zustand/store";
+import TopBtn from "@/components/TopBtn";
 
 // 데이터를 가져오는 함수
 const fetchPlace = async ({
@@ -32,14 +33,12 @@ const fetchPlace = async ({
   return response.data;
 };
 
-
-function TagPageClient({tag}: {tag:string}) {
+function TagPageClient({ tag }: { tag: string }) {
   const isTagPage = true;
   const { ref, inView } = useInView();
-  const {setAttraction} = selectedAttraction();
+  const { setAttraction } = selectedAttraction();
 
   const decodeTag = decodeURIComponent(tag);
-
 
   // Infinite Query
   const { data, fetchNextPage, isLoading, isError, isFetchingNextPage } =
@@ -69,14 +68,15 @@ function TagPageClient({tag}: {tag:string}) {
   if (isError) return <Error />;
 
   const cardClick = (place: attraction) => {
-      setAttraction(place);
-      redirect(`/explore/place/${place.id}`);
-    };
+    setAttraction(place);
+    redirect(`/explore/place/${place.id}`);
+  };
 
   return (
     <div>
+      <TopBtn />
       <section className="flex lg:flex-row flex-col items-center lg:items-end text-center lg:text-left justify-center lg:justify-normal">
-      {matchingImage?.img ? (
+        {matchingImage?.img ? (
           <div className="relative min-w-[200px] min-h-[200px] lg:w-[300px] lg:h-[300px] overflow-hidden m-4">
             <Image
               src={matchingImage?.img || ""}
