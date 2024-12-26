@@ -11,7 +11,7 @@ import {
 import axios from "axios";
 import { attraction } from "@/Type";
 import { useQuery } from "react-query";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Loading from "@/components/Loading";
 import Error from "@/components/Error";
 import AttractionCard from "@/components/layout/AttractionCard";
@@ -28,6 +28,7 @@ const fetchAttraction = async ({ location }: { location: string }) => {
 
 function FixedLocationCarosuel({location, id}: {location: string, id: number}) {
   const {setAttraction} = selectedAttraction();
+  const router = useRouter();
   const {
     data: locationAttraction,
     isLoading,
@@ -45,7 +46,7 @@ function FixedLocationCarosuel({location, id}: {location: string, id: number}) {
 
   const cardClick = (attraction: attraction) => {
       setAttraction(attraction);
-      redirect(`/explore/place/${attraction.id}`);
+      router.push(`/explore/place/${attraction.id}`);
     };
 
   return (

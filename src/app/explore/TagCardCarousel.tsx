@@ -10,11 +10,12 @@ import {
 } from "@/components/ui/carousel";
 import { bgImages } from "@/Type";
 import TagCard from "@/app/explore/TagCard";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 function TagCardCarousel() {
+  const router = useRouter();
   const cardClick = (tag: string) => {
-    redirect(`/explore/${encodeURIComponent(tag)}`);
+    router.push(`/explore/${encodeURIComponent(tag)}`);
   };
   return (
     <div className="lg:w-screen">

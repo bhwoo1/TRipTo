@@ -1,16 +1,17 @@
 "use client"
 
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { FormEvent, useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
 
 function SearchBar() {
   const [keyword, setKeyword] = useState<string>("");
+  const router = useRouter();
 
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
     if(keyword != "") {
-      redirect(`/explore/search/${encodeURIComponent(keyword)}`);
+      router.push(`/explore/search/${encodeURIComponent(keyword)}`);
     }
     else {
       alert('검색어를 입력하세요.');

@@ -15,7 +15,7 @@ import { useQuery } from "react-query";
 import Loading from "./Loading";
 import Error from "./Error";
 import AttractionCard from "./layout/AttractionCard";
-import { redirect, usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import LocationSelect from "@/app/explore/LocationSelect";
 
 const fetchAttraction = async ({ areaToUse }: { areaToUse: string }) => {
@@ -33,6 +33,7 @@ function LocationCarosuel() {
   const { selectedArea } = selectedAreaStore();
   const {setAttraction} = selectedAttraction();
   const area = locationArea.split(" ").slice(0, 1);
+  const router = useRouter();
 
   const areaToUse = pathname === "/explore" ? selectedArea : locationArea;
 
@@ -51,7 +52,7 @@ function LocationCarosuel() {
 
   const cardClick = (attraction: attraction) => {
     setAttraction(attraction);
-    redirect(`/explore/place/${attraction.id}`);
+    router.push(`/explore/place/${attraction.id}`);
   };
 
   return (

@@ -4,11 +4,12 @@ import TagCard from "@/app/explore/TagCard";
 import { bgImages } from "@/Type";
 import React from "react";
 import TagCardCarousel from "./TagCardCarousel";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 function TagList() {
+  const router = useRouter();
   const cardClick = (tag: string) => {
-    redirect(`/explore/${encodeURIComponent(tag)}`);
+    router.push(`/explore/${encodeURIComponent(tag)}`);
   };
 
   

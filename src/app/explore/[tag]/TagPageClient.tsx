@@ -4,7 +4,7 @@ import Error from "@/components/Error";
 import Loading from "@/components/Loading";
 import { attraction, bgImages } from "@/Type";
 import axios from "axios";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { useInfiniteQuery } from "react-query";
 import Image from "next/image";
@@ -34,6 +34,7 @@ const fetchPlace = async ({
 
 function TagPageClient({ tag }: { tag: string }) {
   const isTagPage = true;
+  const router = useRouter();
   const { ref, inView } = useInView();
   const { setAttraction } = selectedAttraction();
 
@@ -68,7 +69,7 @@ function TagPageClient({ tag }: { tag: string }) {
 
   const cardClick = (place: attraction) => {
     setAttraction(place);
-    redirect(`/explore/place/${place.id}`);
+    router.push(`/explore/place/${place.id}`);
   };
 
   return (

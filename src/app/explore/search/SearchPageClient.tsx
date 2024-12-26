@@ -6,7 +6,7 @@ import Loading from "@/components/Loading";
 import SearchBar from "@/components/SearchBar";
 import { attraction } from "@/Type";
 import axios from "axios";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
@@ -29,6 +29,7 @@ const fetchPlace = async ({
 
 
 function SearchPageClient({keyword}: {keyword: string}) {
+  const router = useRouter();
 
   const { ref, inView } = useInView();
 
@@ -56,11 +57,11 @@ function SearchPageClient({keyword}: {keyword: string}) {
   if (isError) return <Error />;
 
   const cardClick = (id: number) => {
-    redirect(`/explore/place?id=${id}`);
+    router.push(`/explore/place?id=${id}`);
   };
 
   const cancelClick = () => {
-    redirect("/explore");
+    router.push("/explore");
   };
 
   return (

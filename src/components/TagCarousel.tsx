@@ -16,7 +16,7 @@ import Loading from "./Loading";
 import Error from "./Error";
 import AttractionCard from "./layout/AttractionCard";
 import AttractionCardPlus from "./layout/AttractionCardPlus";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 
 
@@ -33,6 +33,7 @@ const fetchAttraction = async ({ tag }: {tag: string}) => {
 function TagCarousel() {
   const { tag } = randomTagStore();
   const {setAttraction} = selectedAttraction();
+  const router = useRouter();
   
 
   const safeTag = tag ??  "";
@@ -54,11 +55,11 @@ function TagCarousel() {
 
   const cardClick = (attraction: attraction) => {
       setAttraction(attraction);
-      redirect(`/explore/place/${attraction.id}`);
+      router.push(`/explore/place/${attraction.id}`);
     };
 
   const tagClick = () => {
-    redirect(`/explore/${encodeURIComponent(safeTag)}`);
+    router.push(`/explore/${encodeURIComponent(safeTag)}`);
   }
 
   

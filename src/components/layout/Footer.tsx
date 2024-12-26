@@ -7,7 +7,6 @@ function Footer({children}: {
   return (
     <div className='flex flex-col'>
         <div className='h-[calc(100%-100px)] mb-24'>
-        {/* <div className="flex-grow"> */}
             {children}
         </div>
         <section className='fixed lg:hidden h-[100px] w-full flex flex-row justify-between items-center p-4 bottom-0 left-0 right-0 bg-white'>

@@ -3,11 +3,12 @@
 import TagCard from "@/app/explore/TagCard";
 import { bgImages } from "@/Type";
 import React from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 function FixedTagList({tags}: {tags: string[]}) {
+  const router = useRouter();
   const cardClick = (tag: string) => {
-    redirect(`/explore/${encodeURIComponent(tag)}`);
+    router.push(`/explore/${encodeURIComponent(tag)}`);
   };
 
   const filteredBgImages = bgImages.filter(image => 
