@@ -1,13 +1,32 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { TiLocation } from "react-icons/ti";
 import FixedLocationCarosuel from "./FixedLocationCarousel";
 import FixedTagList from "./FixedTagList";
 import { attraction } from "@/Type";
+import { useRouter } from "next/navigation";
 
 function Place({place, id}: {place: attraction, id: number}) {
+  const router = useRouter();
+
+  useEffect(() => {
+    // 페이지가 로드될 때 현재 페이지를 히스토리 스택에 추가
+    window.history.pushState(null, '', window.location.href);
+
+    const handlePopState = () => {
+      // 뒤로가기를 누르면 특정 링크로 리디렉션
+      router.push('/explore');
+    };
+
+    // popstate 이벤트를 통해 뒤로가기 시 동작 제어
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState); // 이벤트 리스너 정리
+    };
+  }, [router]);
     
   return (
     <div>
