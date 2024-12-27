@@ -20,7 +20,7 @@ function Header({ children }: { children: React.ReactNode }) {
   return (
     <header className="relative">
       <section className=" absolute top-0 w-full">{bgImgByPathname()}</section>
-      <section className="sticky h-[100px] flex flex-row justify-between items-center p-4">
+      <section className="h-[100px] flex flex-row justify-between items-center p-4">
         <div className="h-[100px] min-w-[100px]">
           <div className="lg:hidden flex">
             <Logo />

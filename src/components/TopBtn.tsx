@@ -1,19 +1,15 @@
-"use client"
+"use client";
 
 import React from "react";
 import { FaArrowUp } from "react-icons/fa";
 
 function TopBtn() {
-    const scrollToTop = () => {
-        // 스크롤 가능한 요소를 확인
-        const scrollableElement = document.querySelector("main") || document.documentElement;
-        if (scrollableElement instanceof HTMLElement) {
-          scrollableElement.scrollTo({
-            top: 0,
-            behavior: "smooth", // 부드럽게 스크롤
-          });
-        }
-      };
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // 부드럽게 스크롤
+    });
+  };
 
   return (
     <div

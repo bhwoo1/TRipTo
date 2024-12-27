@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useInView } from "react-intersection-observer";
 import AttractionCard from "@/components/layout/AttractionCard";
 import { selectedAttraction } from "@/zustand/store";
+import TopBtn from "@/components/TopBtn";
 
 // 데이터를 가져오는 함수
 const fetchPlace = async ({
@@ -74,7 +75,7 @@ function TagPageClient({ tag }: { tag: string }) {
 
   return (
     <div>
-      {/* <TopBtn /> */}
+      <TopBtn />
       <section className="flex lg:flex-row flex-col items-center lg:items-end text-center lg:text-left justify-center lg:justify-normal">
         {matchingImage?.img ? (
           <div className="relative min-w-[200px] min-h-[200px] lg:w-[300px] lg:h-[300px] overflow-hidden m-4">

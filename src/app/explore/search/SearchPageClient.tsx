@@ -4,6 +4,7 @@ import Error from "@/components/Error";
 import AttractionCard from "@/components/layout/AttractionCard";
 import Loading from "@/components/Loading";
 import SearchBar from "@/components/SearchBar";
+import TopBtn from "@/components/TopBtn";
 import { attraction } from "@/Type";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -66,6 +67,7 @@ function SearchPageClient({keyword}: {keyword: string}) {
 
   return (
     <div>
+      <TopBtn />
       <div className="mt-24">
         <SearchBar />
       </div>
