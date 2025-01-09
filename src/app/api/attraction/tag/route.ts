@@ -2,12 +2,20 @@ import { attraction } from "@/Type";
 import mysql from "mysql2/promise";
 import { NextResponse } from "next/server";
 
+const host = process.env.NEXT_PUBLIC_DB_HOST
+const user = process.env.NEXT_PUBLIC_DB_USER
+const password = process.env.NEXT_PUBLIC_DB_PASSWORD
+const db = process.env.NEXT_PUBLIC_DB_DBNAME
+const port = 3306
+
+
+// MySQL 데이터베이스 연결 설정
 const pool = mysql.createPool({
-  host: 'my8003.gabiadb.com',
-  port: 3306,
-  user: 'bhwoo1',
-  password: 'vlald@1592',
-  database: 'tripto',
+  host: host,
+  port: port,
+  user: user,
+  password: password,
+  database: db,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
