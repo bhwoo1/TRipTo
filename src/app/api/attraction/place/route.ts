@@ -3,10 +3,10 @@ import mysql from "mysql2/promise";
 import { NextResponse } from "next/server";
 
 
-const host = process.env.NEXT_PUBLIC_DB_HOST
-const user = process.env.NEXT_PUBLIC_DB_USER
-const password = process.env.NEXT_PUBLIC_DB_PASSWORD
-const db = process.env.NEXT_PUBLIC_DB_DBNAME
+const host = process.env.DB_HOST
+const user = process.env.DB_USER
+const password = process.env.DB_PASSWORD
+const db = process.env.DB_DBNAME
 const port = 3306
 
 
