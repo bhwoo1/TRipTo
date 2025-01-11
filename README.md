@@ -1,36 +1,17 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## TRipTo
 
-## Getting Started
 
-First, run the development server:
+    UI/UX 및 반응형 디자인, Next.JS의 API Routes를 공부하는 목적으로 진행한 미니 프로젝트입니다.
+    
+    사용자의 GPS 정보를 받아와 Naver 지도 API의 Reverse Geocoding 모듈을 이용해 사용자가 위치한 곳의 정보를 취득해 해당 지역의 관광지를 소개합니다.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+    관광지를 총 10개의 태그로 분류하였으며 페이지에 접속할 때마다 랜덤으로 10개의 태그 중 1개를 선택해 해당 태그에 해당하는 관광지를 소개하며, 사용자는 검색을 통해 관광지 정보를 얻을 수 있습니다.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    MySQL을 이용해 DB를 구축하였으며 현재 등록되어 있는 관광지 정보는 더미 데이터로 구성하였습니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ## 주요 기능
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+     - API Routes를 활용해 별도의 웹 서버 없이 DB와 통신
+     - React-Query를 활용해 무한 스크롤 구현
+     - PC와 모바일 모두 호환되는 반응형 디자인
